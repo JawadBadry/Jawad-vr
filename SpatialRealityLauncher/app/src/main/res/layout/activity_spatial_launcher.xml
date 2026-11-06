@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- OpenGL ES 3.0 Surface for Stereo AR Passthrough & 3D Spatial Rendering -->
+    <android.opengl.GLSurfaceView
+        android:id="@+id/glSurfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Optional Center Divider Line for Stereo VR Cardboard Mode -->
+    <View
+        android:id="@+id/stereoCenterDivider"
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="#44FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Vision Pro Style Floating Toggle Pill Button (Opens/Closes Settings) -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnToggleSidebar"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_margin="16dp"
+        android:text="⚙ Control Center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        app:cornerRadius="22dp"
+        app:backgroundTint="#8012151D"
+        app:strokeColor="#40FFFFFF"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Status HUD Pill (Vision Pro look) showing Hand & 6DoF Status -->
+    <TextView
+        android:id="@+id/tvTrackingHud"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:text="Spatial Tracking: 6DoF Active | Hand: Detecting..."
+        android:textColor="@color/spatial_cyan"
+        android:textSize="12sp"
+        android:background="#8012151D"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Elegant VisionOS/Quest Glassmorphism Sidebar Panel -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sidebarPanel"
+        android:layout_width="320dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:visibility="visible"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/glass_dark"
+        app:layout_constraintTop_toBottomOf="@id/btnToggleSidebar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_title"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/glass_border" />
+
+                <!-- View Mode Radio Selector -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_mode"
+                    android:textColor="@color/spatial_cyan"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgViewMode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <RadioButton
+                        android:id="@+id/rbFullscreen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mode_fullscreen"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbStereoVR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/mode_stereo_vr"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+                </RadioGroup>
+
+                <!-- IPD Adjustment Slider -->
+                <TextView
+                    android:id="@+id/tvIpdLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="IPD Eye Separation: 50 / 100"
+                    android:textColor="@color/spatial_cyan"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <SeekBar
+                    android:id="@+id/sbIpd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:max="100"
+                    android:progress="50" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Slide to shift stereo viewports for VR lens calibration"
+                    android:textColor="#88FFFFFF"
+                    android:textSize="11sp" />
+
+                <!-- Spatial Window Spawner Buttons -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:text="In-App 3D Spatial Windows"
+                    android:textColor="@color/spatial_cyan"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSpawnBrowser"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="8dp"
+                    android:text="🌐 Spawn 3D Web Browser"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="#4000E5FF" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSpawnNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="6dp"
+                    android:text="📝 Spawn 3D Spatial Notes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="#407C4DFF" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSpawnMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="6dp"
+                    android:text="🎬 Spawn 3D Media Cinema"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="#4000E676" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnResetAnchors"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="14dp"
+                    android:text="↺ Reset Space &amp; Recenter"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="#50FF5252" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

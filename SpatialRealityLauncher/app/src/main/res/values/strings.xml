@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Spatial Reality Launcher</string>
+    <string name="settings_title">Spatial Controls</string>
+    <string name="view_mode">View Mode</string>
+    <string name="mode_fullscreen">Fullscreen Mono</string>
+    <string name="mode_stereo_vr">Stereo VR (Cardboard/SBS)</string>
+    <string name="ipd_spacing">IPD Eye Separation (%d mm)</string>
+    <string name="btn_reset_anchors">Reset Spatial Anchors</string>
+    <string name="btn_open_browser">Spawn Web Window</string>
+    <string name="btn_open_notes">Spawn Notes Window</string>
+    <string name="btn_open_media">Spawn Media Window</string>
+    <string name="hand_tracking_status">Hand: %s | Pinch: %s</string>
+    <string name="camera_permission_required">Camera permission is required for ARCore spatial tracking.</string>
+</resources>
